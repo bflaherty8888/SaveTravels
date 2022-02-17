@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1" isErrorPage="true"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -14,44 +14,34 @@
 	crossorigin="anonymous">
 </head>
 <body>
-	<div class="container my-4">
-		<h1>Save Travels</h1>
-		<table class="table table-striped border rounded align-middle">
-			<tr>
-				<th>Expense</th>
-				<th class="text-center">Vendor</th>
-				<th class="text-end">Amount</th>
-				<th class="text-center">Actions</th>
-			</tr>
-			<c:forEach var="expense" items="${ expenses }">
-				<tr>
-					<td><c:out value="${ expense.name }"></c:out></td>
-					<td class="text-center"><c:out value="${ expense.vendor }"></c:out></td>
-					<td class="text-end">$<c:out
-							value="${ String.format('%.2f', expense.amount) }"></c:out></td>
-					<td class="text-center"><a href="/expenses/${ expense.id }/edit" class="btn btn-primary p-1 my-0">Edit</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-		<div class="w-75 mt-5 mx-auto">
-			<h2>Add an expense:</h2>
-			<form:form action="/expenses/create" method="post"
+	<div class="container my-4 w-75">
+		<a href="/expenses" class="btn btn-primary btn-sm float-end">Go
+			back</a>
+		<h1>
+			Edit <c:out value="${ expense.name }"></c:out>:
+		</h1>
+		<div class="mt-5 mx-auto">
+			<form:form action="/expenses/${ expense.id }/update" method="post"
 				modelAttribute="expense" class="form-control">
+				<input type="hidden" name="_method" value="put">
 				<p>
 					<form:label path="name" class="form-label">Expense Name:</form:label>
 					<form:input path="name" class="form-control" />
-					<form:errors path="name" class="form-text alert alert-danger p-1 border-top-0" />
+					<form:errors path="name"
+						class="form-text alert alert-danger p-1 border-top-0" />
 				</p>
 				<p>
 					<form:label path="vendor" class="form-label">Vendor:</form:label>
 					<form:input path="vendor" class="form-control" />
-					<form:errors path="vendor" class="form-text alert alert-danger p-1 border-top-0" />
+					<form:errors path="vendor"
+						class="form-text alert alert-danger p-1 border-top-0" />
 				</p>
 				<p>
 					<form:label path="amount" class="form-label">Amount:</form:label>
 					<form:input type="number" step="0.01" path="amount"
 						class="form-control" />
-					<form:errors path="amount" class="form-text alert alert-danger p-1 border-top-0" />
+					<form:errors path="amount"
+						class="form-text alert alert-danger p-1 border-top-0" />
 				</p>
 				<p>
 					<form:label path="description" class="form-label">Description:</form:label>
